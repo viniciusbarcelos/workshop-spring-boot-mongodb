@@ -24,11 +24,9 @@ import com.vob.workshopmongo.services.UserService;
 public class UserResource {
 
 	@Autowired
-
 	private UserService service;
 
 	@RequestMapping(method = RequestMethod.GET)
-
 	public ResponseEntity<List<UserDTO>> findAll() {
 
 		List<User> list = service.findAll();
@@ -40,7 +38,6 @@ public class UserResource {
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
-
 	public ResponseEntity<UserDTO> findById(@PathVariable String id) {
 
 		User obj = service.findById(id);
@@ -50,7 +47,6 @@ public class UserResource {
 	}
 
 	@RequestMapping(method = RequestMethod.POST)
-
 	public ResponseEntity<Void> insert(@RequestBody UserDTO objDto) {
 
 		User obj = service.fromDTO(objDto);
@@ -60,6 +56,13 @@ public class UserResource {
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
 
 		return ResponseEntity.created(uri).build();
+
+	}
+	
+	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+	public ResponseEntity<Void> delete(@PathVariable String id) {
+		service.deleteById(id);
+		return ResponseEntity.noContent().build();
 
 	}
 
