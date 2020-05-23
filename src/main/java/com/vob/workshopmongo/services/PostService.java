@@ -1,5 +1,6 @@
 package com.vob.workshopmongo.services;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,12 @@ public class PostService {
 		Optional<Post> user = repo.findById(id); // throws IllegalArgumentException if 'id' is null
 
 		return user.orElseThrow(() -> new ObjectNotFoundException(String.format("Requested id=%s does not exist", id)));
+	}
+
+	public List<Post> findByTitle(String text) {
+
+		return repo.findByTitleContainingIgnoreCase(text);
+
 	}
 
 }
